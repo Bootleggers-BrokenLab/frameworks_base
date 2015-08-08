@@ -658,6 +658,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     // Custom additions
     private static final int MSG_CAMERA_LONG_PRESS = 101;
+    private SwipeToScreenshotListener mSwipeToScreenshot;
 
     private LineageHardwareManager mLineageHardware;
 
@@ -2448,6 +2449,11 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             mCameraLaunch = Settings.System.getIntForUser(resolver,
                     Settings.System.CAMERA_LAUNCH, 0,
                     UserHandle.USER_CURRENT) == 1;
+
+            //Three Finger Gesture
+            boolean threeFingerGesture = Settings.System.getIntForUser(resolver,
+                    Settings.System.THREE_FINGER_GESTURE, 0, UserHandle.USER_CURRENT) == 1;
+            enableSwipeThreeFingerGesture(threeFingerGesture)
 
             // Configure wake gesture.
             boolean wakeGestureEnabledSetting = Settings.Secure.getIntForUser(resolver,

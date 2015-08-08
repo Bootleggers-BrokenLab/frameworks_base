@@ -5387,6 +5387,12 @@ public final class Settings {
                 "high_touch_sensitivity_enable";
 
         /**
+         * Three Finger Gesture from Oppo
+         * @hide
+         */
+        public static final String THREE_FINGER_GESTURE = "three_finger_gesture";
+
+        /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
          * it to PRIVATE_SETTINGS below. Also add a validator that can validate
@@ -5643,6 +5649,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUSBAR_CLOCK_DATE_STYLE);
             PRIVATE_SETTINGS.add(STATUSBAR_CLOCK_DATE_FORMAT);
             PRIVATE_SETTINGS.add(STATUSBAR_CLOCK_DATE_POSITION);
+            PRIVATE_SETTINGS.add(THREE_FINGER_GESTURE);
         }
 
         /**
