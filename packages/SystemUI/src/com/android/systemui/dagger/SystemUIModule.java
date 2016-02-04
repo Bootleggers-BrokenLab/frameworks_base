@@ -39,6 +39,7 @@ import com.android.systemui.biometrics.dagger.BiometricsModule;
 import com.android.systemui.biometrics.domain.BiometricsDomainLayerModule;
 import com.android.systemui.bouncer.data.repository.BouncerRepositoryModule;
 import com.android.systemui.bouncer.domain.interactor.BouncerInteractorModule;
+import com.android.systemui.bootleg.BootlegModule;
 import com.android.systemui.bouncer.ui.BouncerViewModule;
 import com.android.systemui.classifier.FalsingModule;
 import com.android.systemui.clipboardoverlay.dagger.ClipboardOverlayModule;
@@ -173,6 +174,7 @@ import javax.inject.Named;
         AuthenticationModule.class,
         BiometricsModule.class,
         BiometricsDomainLayerModule.class,
+        BootlegModule.class,
         BouncerInteractorModule.class,
         BouncerRepositoryModule.class,
         BouncerViewModule.class,
