@@ -22,6 +22,7 @@ import static com.android.internal.logging.MetricsLogger.VIEW_UNKNOWN;
 import android.content.Context;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -82,6 +83,10 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
     private final WeatherDialogFactory mWeatherDialogFactory;
     private final ActivityStarter mActivityStarter;
     private final Icon mIcon = ResourceIcon.get(R.drawable.ic_qs_weather_default_on);
+
+    private static final String[] ALTERNATIVE_WEATHER_APPS = {
+            "cz.martykan.forecastie",
+    };
 
     @Inject
     public WeatherTile(
@@ -197,6 +202,13 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
                     "com.google.android.apps.gsa.velour.DynamicActivityTrampoline"));
             return intent;
         } else {
+            PackageManager pm = mContext.getPackageManager();
+            for (String app: ALTERNATIVE_WEATHER_APPS) {
+                Intent intent = pm.getLaunchIntentForPackage(app);
+                if (intent != null) {
+                    return intent;
+                }
+            }
             return mWeatherClient.getSettingsIntent();
         }
     }
