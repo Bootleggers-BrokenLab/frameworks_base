@@ -51,4 +51,7 @@
     <!-- Additional gesture navbar lengths -->
     <dimen name="navigation_home_handle_width_medium">125dp</dimen>
     <dimen name="navigation_home_handle_width_long">155dp</dimen>
+
+    <!-- OmniWeather image size -->
+    <dimen name="current_weather_image_size">42dp</dimen>
 </resources>
