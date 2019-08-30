@@ -1,0 +1,4 @@
+<resources>
+<!-- Whether to send camera status intent -->
+    <bool name="config_sendCameraStatusIntent">false</bool>
+</resources>
