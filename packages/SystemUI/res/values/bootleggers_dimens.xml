@@ -47,4 +47,8 @@
 
     <!-- Size to enlarge Enrollment GHBM Dot Size by in DP. -->
     <dimen name="udfps_enroll_dot_additional_size">0dp</dimen>
+
+    <!-- OmniStyle custom headers -->
+    <dimen name="qs_header_image_height">142dp</dimen>
+    <dimen name="qs_header_image_fade_size">80dp</dimen>
 </resources>
