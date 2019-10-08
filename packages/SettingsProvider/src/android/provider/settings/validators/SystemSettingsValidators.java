@@ -16,6 +16,7 @@
 
 package android.provider.settings.validators;
 
+import static android.provider.settings.validators.SettingsValidators.ANY_INTEGER_VALIDATOR;
 import static android.provider.settings.validators.SettingsValidators.ANY_STRING_VALIDATOR;
 import static android.provider.settings.validators.SettingsValidators.BOOLEAN_VALIDATOR;
 import static android.provider.settings.validators.SettingsValidators.COMPONENT_NAME_VALIDATOR;
@@ -215,5 +216,11 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.OMNIJAWS_WEATHER_ICON_PACK, ANY_STRING_VALIDATOR);
         VALIDATORS.put(System.OMNI_LOCKSCREEN_WEATHER_ENABLED, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.AICP_LOCKSCREEN_WEATHER_STYLE, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.STATUS_BAR_CUSTOM_HEADER, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.STATUS_BAR_CUSTOM_HEADER_SHADOW, ANY_INTEGER_VALIDATOR);
+        VALIDATORS.put(System.STATUS_BAR_DAYLIGHT_HEADER_PACK, ANY_STRING_VALIDATOR);
+        VALIDATORS.put(System.STATUS_BAR_CUSTOM_HEADER_PROVIDER, ANY_STRING_VALIDATOR);
+        VALIDATORS.put(System.STATUS_BAR_CUSTOM_HEADER_IMAGE, ANY_STRING_VALIDATOR);
+        VALIDATORS.put(System.STATUS_BAR_FILE_HEADER_IMAGE, ANY_STRING_VALIDATOR);
     }
 }
