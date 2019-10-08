@@ -95,5 +95,11 @@ public class SystemSettings {
         Settings.System.OMNIJAWS_WEATHER_ICON_PACK,
         Settings.System.OMNI_LOCKSCREEN_WEATHER_ENABLED,
         Settings.System.AICP_LOCKSCREEN_WEATHER_STYLE,
+        Settings.System.STATUS_BAR_CUSTOM_HEADER,
+        Settings.System.STATUS_BAR_CUSTOM_HEADER_SHADOW,
+        Settings.System.STATUS_BAR_DAYLIGHT_HEADER_PACK,
+        Settings.System.STATUS_BAR_CUSTOM_HEADER_PROVIDER,
+        Settings.System.STATUS_BAR_CUSTOM_HEADER_IMAGE,
+        Settings.System.STATUS_BAR_FILE_HEADER_IMAGE,
     };
 }
