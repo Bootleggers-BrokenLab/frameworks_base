@@ -36,7 +36,6 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
-import com.android.settingslib.development.DevelopmentSettingsEnabler;
 import com.android.systemui.R;
 
 /**
@@ -58,7 +57,7 @@ public class QSFooterView extends FrameLayout {
 
     private OnClickListener mExpandClickListener;
 
-    private final ContentObserver mDeveloperSettingsObserver = new ContentObserver(
+    private final ContentObserver mFootextSettingsObserver = new ContentObserver(
             new Handler(mContext.getMainLooper())) {
         @Override
         public void onChange(boolean selfChange, Uri uri) {
@@ -85,7 +84,10 @@ public class QSFooterView extends FrameLayout {
 
     private void setBuildText() {
         if (mBuildText == null) return;
-        if (DevelopmentSettingsEnabler.isDevelopmentSettingsEnabled(mContext)) {
+        boolean showFooterText = Settings.System.getIntForUser(mContext.getContentResolver(),
+                        Settings.System.FOOTER_TEXT_SHOW, 0,
+                        UserHandle.USER_CURRENT) == 1;
+        if (showFooterText) {
             mBuildText.setText(mContext.getString(
                     com.android.internal.R.string.bugreport_status,
                     Build.VERSION.RELEASE_OR_CODENAME,
@@ -159,14 +161,14 @@ public class QSFooterView extends FrameLayout {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         mContext.getContentResolver().registerContentObserver(
-                Settings.Global.getUriFor(Settings.Global.DEVELOPMENT_SETTINGS_ENABLED), false,
-                mDeveloperSettingsObserver, UserHandle.USER_ALL);
+                Settings.System.getUriFor(Settings.System.FOOTER_TEXT_SHOW), false,
+                mFootextSettingsObserver, UserHandle.USER_ALL);
     }
 
     @Override
     @VisibleForTesting
     public void onDetachedFromWindow() {
-        mContext.getContentResolver().unregisterContentObserver(mDeveloperSettingsObserver);
+        mContext.getContentResolver().unregisterContentObserver(mFootextSettingsObserver);
         super.onDetachedFromWindow();
     }
 
