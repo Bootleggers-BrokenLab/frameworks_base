@@ -38,10 +38,10 @@
     <!-- Weather condition icon  -->
     <dimen name="weather_icon_size">24dp</dimen>
 
-        <!-- Old style mobile data indicators -->
-        <dimen name="status_bar_mobile_signal_with_type_width">22dp</dimen>
-        <dimen name="status_bar_mobile_signal_width">16dp</dimen>
-        <dimen name="status_bar_mobile_type_height">10dp</dimen>
+    <!-- Old style mobile data indicators -->
+    <dimen name="status_bar_mobile_signal_with_type_width">22dp</dimen>
+    <dimen name="status_bar_mobile_signal_width">16dp</dimen>
+    <dimen name="status_bar_mobile_type_height">10dp</dimen>
 
    <!-- Tri-state UI -->
     <dimen name="tri_state_down_dialog_padding_edge">8.0dip</dimen>
@@ -74,4 +74,8 @@
     <dimen name="tri_state_up_bottom_right_radius">0.0px</dimen>
     <dimen name="tri_state_up_top_left_radius">63.0px</dimen>
     <dimen name="tri_state_up_top_right_radius">63.0px</dimen>
+
+    <!-- FOD Animation Size -->
+    <dimen name="fod_animation_size">280dp</dimen>
+
 </resources>
