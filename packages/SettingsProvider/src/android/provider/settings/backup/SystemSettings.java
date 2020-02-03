@@ -108,5 +108,6 @@ public class SystemSettings {
         Settings.System.NOTIFICATION_COOLDOWN_ALL,
         Settings.System.NOTIFICATION_COOLDOWN_VIBRATE_UNLOCKED,
         Settings.System.FULLSCREEN_GESTURES,
+        Settings.System.RINGTONE_VIBRATION_PATTERN,
     };
 }
