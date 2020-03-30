@@ -118,5 +118,6 @@ interface IStatusBarService
      * Extra features functions
      */
     void toggleCameraFlash();
+    void setPartialScreenshot(boolean active);
     void toggleCameraFlashState(boolean enable);
 }
