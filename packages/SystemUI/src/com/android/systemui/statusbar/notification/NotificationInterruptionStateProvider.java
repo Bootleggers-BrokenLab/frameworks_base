@@ -75,6 +75,9 @@ public class NotificationInterruptionStateProvider {
     @VisibleForTesting
     protected boolean mUseHeadsUp = false;
     private boolean mDisableNotificationAlerts;
+    private boolean mPartialScreenshot;
+
+
 
     @Inject
     public NotificationInterruptionStateProvider(Context context, NotificationFilter filter,
@@ -243,7 +246,7 @@ public class NotificationInterruptionStateProvider {
             return false;
         }
 
-        if (entry.shouldSuppressPeek()) {
+        if (entry.shouldSuppressPeek() || mPartialScreenshot) {
             if (DEBUG_HEADS_UP) {
                 Log.d(TAG, "No heads up: suppressed by DND: " + sbn.getKey());
             }
@@ -355,6 +358,11 @@ public class NotificationInterruptionStateProvider {
         }
         return true;
     }
+
+    public void setPartialScreenshot(boolean active) {
+        mPartialScreenshot = active;
+    }
+
 
     /**
      * Common checks between alerts that occur while the device is awake (heads up & bubbles).
