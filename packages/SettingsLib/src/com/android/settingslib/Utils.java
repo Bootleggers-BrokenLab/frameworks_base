@@ -28,6 +28,7 @@ import android.provider.Settings;
 import android.telephony.ServiceState;
 
 import com.android.internal.annotations.VisibleForTesting;
+import com.android.internal.custom.longshot.LongScreenshotManagerService;
 import com.android.internal.util.UserIcons;
 import com.android.settingslib.drawable.UserIconDrawable;
 
@@ -177,9 +178,19 @@ public class Utils {
     public static String getBatteryStatus(Resources res, Intent batteryChangedIntent) {
         int status = batteryChangedIntent.getIntExtra(BatteryManager.EXTRA_STATUS,
                 BatteryManager.BATTERY_STATUS_UNKNOWN);
+        boolean dashChargeStatus = batteryChangedIntent.getBooleanExtra(
+                BatteryManager.EXTRA_DASH_CHARGER, false);
+        boolean warpChargeStatus = batteryChangedIntent.getBooleanExtra(
+                BatteryManager.EXTRA_WARP_CHARGER, false);
         String statusString;
         if (status == BatteryManager.BATTERY_STATUS_CHARGING) {
-            statusString = res.getString(R.string.battery_info_status_charging);
+            if (dashChargeStatus) {
+                statusString = res.getString(R.string.battery_info_status_dash_charging);
+            } else if (warpChargeStatus) {
+                statusString = res.getString(R.string.battery_info_status_warp_charging);
+            } else {
+                statusString = res.getString(R.string.battery_info_status_charging);
+            }
         } else if (status == BatteryManager.BATTERY_STATUS_DISCHARGING) {
             statusString = res.getString(R.string.battery_info_status_discharging);
         } else if (status == BatteryManager.BATTERY_STATUS_NOT_CHARGING) {
@@ -294,6 +305,7 @@ public class Utils {
                 || pkg.packageName.equals(sServicesSystemSharedLibPackageName)
                 || pkg.packageName.equals(sSharedSystemSharedLibPackageName)
                 || pkg.packageName.equals(PrintManager.PRINT_SPOOLER_PACKAGE_NAME)
+                || pkg.packageName.equals(LongScreenshotManagerService.PACKAGENAME_LONGSHOT)
                 || isDeviceProvisioningPackage(resources, pkg.packageName);
     }
 

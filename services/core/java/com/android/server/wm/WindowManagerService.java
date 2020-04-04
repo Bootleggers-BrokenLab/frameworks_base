@@ -5664,8 +5664,6 @@ public class WindowManagerService extends IWindowManager.Stub
 
     @Override
     public void setRecentsVisibility(boolean visible) {
-        mAtmInternal.enforceCallerIsRecentsOrHasPermission(android.Manifest.permission.STATUS_BAR,
-                "setRecentsVisibility()");
         synchronized (mGlobalLock) {
             mPolicy.setRecentsVisibilityLw(visible);
         }
@@ -5686,8 +5684,6 @@ public class WindowManagerService extends IWindowManager.Stub
 
     @Override
     public void setShelfHeight(boolean visible, int shelfHeight) {
-        mAtmInternal.enforceCallerIsRecentsOrHasPermission(android.Manifest.permission.STATUS_BAR,
-                "setShelfHeight()");
         synchronized (mGlobalLock) {
             getDefaultDisplayContentLocked().getPinnedStackController().setAdjustedForShelf(visible,
                     shelfHeight);
@@ -7548,6 +7544,20 @@ public class WindowManagerService extends IWindowManager.Stub
                         .removeNonHighRefreshRatePackage(packageName));
             }
         }
+
+        @Override
+        public boolean isMinimizedDock() {
+            boolean isMinimizedDock;
+            synchronized (mWindowMap) {
+                try {
+                    boostPriorityForLockedSection();
+                    isMinimizedDock = getDefaultDisplayContentLocked().getDockedDividerController().isMinimizedDock();
+                } finally {
+                    resetPriorityAfterLockedSection();
+                }
+            }
+            return isMinimizedDock;
+        }
     }
 
     void registerAppFreezeListener(AppFreezeListener listener) {
@@ -7823,5 +7833,15 @@ public class WindowManagerService extends IWindowManager.Stub
             displayContent.mAcitvityDisplay.ensureActivitiesVisible(null /* starting */,
                     0 /* configChanges */, !PRESERVE_WINDOWS, true /* notifyClients */);
         }
+    }
+
+    @Override
+    public void stopLongshotConnection() {
+        mPolicy.stopLongshotConnection();
+    }
+
+    @Override
+    public void takeOPScreenshot(int type) {
+        mPolicy.takeOPScreenshot(type);
     }
 }
