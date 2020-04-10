@@ -318,7 +318,7 @@ public interface StatusBarIconController {
 
         private NetworkTrafficSB onCreateNetworkTraffic(String slot) {
             NetworkTrafficSB view = new NetworkTrafficSB(mContext);
-            view.setPadding(3, 6, 3, 0);
+            view.setPadding(1, 1, 1, 1);
             return view;
         }
 
@@ -363,8 +363,10 @@ public interface StatusBarIconController {
         }
 
         public void onSetIcon(int viewIndex, StatusBarIcon icon) {
-            StatusBarIconView view = (StatusBarIconView) mGroup.getChildAt(viewIndex);
-            view.set(icon);
+            View view = mGroup.getChildAt(viewIndex);
+            if (view instanceof StatusBarIconView) {
+                ((StatusBarIconView) view).set(icon);
+            }
         }
 
         public void onSetIconHolder(int viewIndex, StatusBarIconHolder holder) {
