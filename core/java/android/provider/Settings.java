@@ -4146,6 +4146,13 @@ public final class Settings {
         @Deprecated
         public static final String ANIMATOR_DURATION_SCALE = Global.ANIMATOR_DURATION_SCALE;
 
+
+	/**
+         * Whether or not to vibrate when a touchscreen gesture is detected
+         * @hide
+         */
+        public static final String TOUCHSCREEN_GESTURE_HAPTIC_FEEDBACK = "touchscreen_gesture_haptic_feedback";
+
         /**
          * Control whether the accelerometer will be used to change screen
          * orientation.  If 0, it will not be used unless explicitly requested
@@ -5321,6 +5328,72 @@ public final class Settings {
         public static final String ROAMING_INDICATOR_ICON = "roaming_indicator_icon";
 
         /**
+         * Whether to show heads up only for dialer and sms apps
+         * @hide
+         */
+        public static final String LESS_BORING_HEADS_UP = "less_boring_heads_up";
+
+        /** @hide */
+        private static final Validator LESS_BORING_HEADS_UP_VALIDATOR = BOOLEAN_VALIDATOR;
+        /**
+         * Gaming mode master switch
+         * @hide
+         */
+        public static final String GAMING_MODE_ENABLED = "gaming_mode_enabled";
+
+        /**
+         * Gaming mode active state - to disable via notification / tile
+         * @hide
+         */
+        public static final String GAMING_MODE_ACTIVE = "gaming_mode_active";
+
+
+        /**
+         * Package name of apps for enabling Gaming mode
+         * @hide
+         */
+        public static final String GAMING_MODE_VALUES = "gaming_mode_values";
+        public static final String GAMING_MODE_DUMMY = "gaming_mode_dummy";
+
+        /**
+         * Whether to disable hardware keys in gaming mode
+         * @hide
+         */
+        public static final String GAMING_MODE_HW_KEYS_TOGGLE = "gaming_mode_hw_keys_toggle";
+
+        /**
+         * Whether to disable heads up gaming mode
+         * @hide
+         */
+        public static final String GAMING_MODE_HEADSUP_TOGGLE = "gaming_mode_headsup_toggle";
+
+        /**
+         * Ringer in gaming mode (0:OFF, 1:Vibrate, 2:DND, 3:Silent)
+         * @hide
+         */
+        public static final String GAMING_MODE_RINGER_MODE = "gaming_mode_ringer_mode";
+
+        /**
+         * Whether to show notifications/toasts (0:OFF, 1:notifications, 2:toasts, 3: all)
+         * @hide
+         */
+        public static final String GAMING_MODE_NOTIFICATIONS = "gaming_mode_notifications";
+
+        /**
+         * Whether to lock brightness in gaming mode
+         * @hide
+         */
+        public static final String GAMING_MODE_MANUAL_BRIGHTNESS_TOGGLE = "gaming_mode_manual_brightness_toggle";
+
+        /**
+         * Whether to automatically enable the gaming mode
+         * if the launched app is a game
+         * @hide
+         */
+        public static final String GAMING_MODE_DYNAMIC_STATE = "gaming_mode_dynamic_state";
+
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -5421,6 +5494,8 @@ public final class Settings {
             CUSTOM_DEVICE_PROXI_CHECK_ENABLED,
             CUSTOM_DEVICE_GESTURE_FEEDBACK_ENABLED,
             CUSTOM_DEVICE_FEATURE_SETTINGS,
+            LESS_BORING_HEADS_UP,
+
         };
 
         /**
@@ -5621,6 +5696,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(USE_OLD_MOBILETYPE);
             PRIVATE_SETTINGS.add(GESTURE_PILL_TOGGLE);
             PRIVATE_SETTINGS.add(BACK_GESTURE_HEIGHT);
+            PRIVATE_SETTINGS.add(LESS_BORING_HEADS_UP);
         }
 
         /**
@@ -5765,6 +5841,7 @@ public final class Settings {
             VALIDATORS.put(CUSTOM_DEVICE_PROXI_CHECK_ENABLED, CUSTOM_DEVICE_PROXI_CHECK_ENABLED_VALIDATOR);
             VALIDATORS.put(CUSTOM_DEVICE_GESTURE_FEEDBACK_ENABLED, CUSTOM_DEVICE_GESTURE_FEEDBACK_ENABLED_VALIDATOR);
             VALIDATORS.put(CUSTOM_DEVICE_FEATURE_SETTINGS, CUSTOM_DEVICE_FEATURE_SETTINGS_VALIDATOR);
+            VALIDATORS.put(LESS_BORING_HEADS_UP, LESS_BORING_HEADS_UP_VALIDATOR);
         }
 
         /**
@@ -8435,6 +8512,12 @@ public final class Settings {
          */
         public static final String SEARCH_GLOBAL_SEARCH_ACTIVITY =
                 "search_global_search_activity";
+
+        /**
+         * Disable hw buttons - actions, brightness, haptic feedback, overflow menu
+         * @hide
+         */
+        public static final String HARDWARE_KEYS_DISABLE = "hardware_keys_disable";
 
         /**
          * The number of promoted sources in GlobalSearch.

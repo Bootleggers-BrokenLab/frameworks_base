@@ -2,6 +2,7 @@
     <!-- Device keyhandlers -->
     <java-symbol type="array" name="config_deviceKeyHandlerLibs" />
     <java-symbol type="array" name="config_deviceKeyHandlerClasses" />
+    <java-symbol type="integer" name="config_deviceHardwareKeys" />
 
     <!-- Button backlight -->
     <java-symbol type="integer" name="config_buttonBrightnessSettingDefault" />
@@ -56,6 +57,9 @@
     <java-symbol type="array" name="config_globallyDisabledComponents" />
     <java-symbol type="array" name="config_forceEnabledComponents" />
 
+    <!-- Whether device has dash charging support -->
+    <java-symbol type="bool" name="config_hasDashCharger" />
+
     <!-- Toast animation -->
     <java-symbol type="style" name="Animation.Toast.Material" />
 
@@ -99,4 +103,20 @@
     <java-symbol type="string" name="config_SmartChargingSysfsNode" />
     <java-symbol type="string" name="config_SmartChargingSupspendValue" />
     <java-symbol type="string" name="config_SmartChargingResumeValue" />
+
+    <!-- Whether device has warp charging support -->
+    <java-symbol type="bool" name="config_hasWarpCharger" />
+
+  <!-- HW keys binding -->
+  <java-symbol type="anim" name="custom_app_in" />
+  <java-symbol type="anim" name="custom_app_out" />
+
+    <!-- Gaming mode -->
+    <java-symbol type="drawable" name="ic_gaming_notif" />
+    <java-symbol type="string" name="notification_channel_gaming" />
+    <java-symbol type="string" name="gaming_mode_notification_title" />
+    <java-symbol type="string" name="gaming_mode_notification_content" />
+    <java-symbol type="string" name="gaming_mode_enabled_toast" />
+    <java-symbol type="string" name="gaming_mode_disabled_toast" />
+
 </resources>
