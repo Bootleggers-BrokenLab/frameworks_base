@@ -5468,6 +5468,45 @@ public final class Settings {
         public static final Validator POCKET_JUDGE_VALIDATOR = BOOLEAN_VALIDATOR;
 
         /**
+         * FOD icon picker
+         * @hide
+         */
+        public static final String FOD_ICON = "fod_icon";
+
+        /** @hide */
+        private static final Validator FOD_ICON_VALIDATOR = ANY_STRING_VALIDATOR;
+
+        /**
+         * FOD pressed state
+         * @hide
+         */
+        public static final String FOD_PRESSED_STATE = "fod_pressed_state";
+
+        /** @hide */
+        private static final Validator FOD_PRESSED_STATE_VALIDATOR =
+                new SettingsValidators.InclusiveIntegerRangeValidator(0, 6);
+
+        /**
+         * FOD recognizing animation
+         * @hide
+         */
+        public static final String FOD_RECOGNIZING_ANIMATION = "fod_recognizing_animation";
+
+        /** @hide */
+        private static final Validator FOD_RECOGNIZING_ANIMATION_VALIDATOR =
+                BOOLEAN_VALIDATOR;
+
+        /**
+         * FOD recognizing animation picker
+         * @hide
+         */
+        public static final String FOD_ANIM = "fod_anim";
+
+        /** @hide */
+        private static final Validator FOD_ANIM_VALIDATOR =
+                new SettingsValidators.InclusiveIntegerRangeValidator(0, 5);
+
+        /**
          * Settings to backup. This is here so that it's in the same place as the settings
          * keys and easy to update.
          *
@@ -5570,6 +5609,10 @@ public final class Settings {
             CUSTOM_DEVICE_GESTURE_FEEDBACK_ENABLED,
             CUSTOM_DEVICE_FEATURE_SETTINGS,
             QS_BLUR,
+            FOD_ICON,
+            FOD_PRESSED_STATE,
+            FOD_RECOGNIZING_ANIMATION,
+            FOD_ANIM,
         };
 
         /**
@@ -5921,6 +5964,10 @@ public final class Settings {
             VALIDATORS.put(DEVICE_INTRODUCTION_COMPLETED, DEVICE_INTRODUCTION_COMPLETED_VALIDATOR);
             VALIDATORS.put(QS_BLUR, QS_BLUR_VALIDATOR);
             VALIDATORS.put(POCKET_JUDGE, POCKET_JUDGE_VALIDATOR);
+            VALIDATORS.put(FOD_ICON, FOD_ICON_VALIDATOR);
+            VALIDATORS.put(FOD_PRESSED_STATE, FOD_PRESSED_STATE_VALIDATOR);
+            VALIDATORS.put(FOD_RECOGNIZING_ANIMATION, FOD_RECOGNIZING_ANIMATION_VALIDATOR);
+            VALIDATORS.put(FOD_ANIM, FOD_ANIM_VALIDATOR);
         }
 
         /**
