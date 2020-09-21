@@ -390,4 +390,9 @@ cc_library_shared {
     lto: {
         never: true,
     },
+
+    // Workaround Clang LTO crash.
+    lto: {
+        never: true,
+    },
 }
