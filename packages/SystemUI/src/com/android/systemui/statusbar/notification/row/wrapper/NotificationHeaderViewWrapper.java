@@ -57,7 +57,6 @@ public class NotificationHeaderViewWrapper extends NotificationViewWrapper {
     protected final ViewTransformationHelper mTransformationHelper;
 
     protected int mColor;
-    protected int mColorAlt;
 
     private CachingIconView mIcon;
     private NotificationExpandButton mExpandButton;
@@ -108,7 +107,6 @@ public class NotificationHeaderViewWrapper extends NotificationViewWrapper {
                         return mIsLowPriority && mTransformLowPriorityTitle;
                     }
                 }, TRANSFORMING_VIEW_TITLE);
-        mColor = row.getNotificationColor();
         resolveHeaderViews();
         addAppOpsOnClickListener(row);
     }
@@ -128,7 +126,7 @@ public class NotificationHeaderViewWrapper extends NotificationViewWrapper {
         mAudiblyAlertedIcon = mView.findViewById(com.android.internal.R.id.alerted_icon);
         if (mNotificationHeader != null) {
             mNotificationHeader.setShowExpandButtonAtEnd(mShowExpandButtonAtEnd);
-            mColorAlt = mNotificationHeader.getOriginalIconColor();
+            mColor = mNotificationHeader.getOriginalIconColor();
         }
     }
 
@@ -170,7 +168,6 @@ public class NotificationHeaderViewWrapper extends NotificationViewWrapper {
         mIsLowPriority = row.getEntry().isAmbient();
         mTransformLowPriorityTitle = !row.isChildInGroup() && !row.isSummaryWithChildren();
         ArraySet<View> previousViews = mTransformationHelper.getAllTransformingViews();
-        mColor = row.getNotificationColor();
 
         // Reinspect the notification.
         resolveHeaderViews();
@@ -196,10 +193,6 @@ public class NotificationHeaderViewWrapper extends NotificationViewWrapper {
             mAppNameText.setTextAppearance(
                     com.android.internal.R.style
                             .TextAppearance_DeviceDefault_Notification_Conversation_AppName);
-            if (mAppNameText.getContext().getResources().getBoolean(
-                    com.android.internal.R.bool.config_allowNotificationAppNameTextTinting)) {
-                mAppNameText.setTextColor(mColor);
-            }
             ViewGroup.MarginLayoutParams layoutParams =
                     (ViewGroup.MarginLayoutParams) mAppNameText.getLayoutParams();
             layoutParams.setMarginStart(0);
@@ -229,10 +222,6 @@ public class NotificationHeaderViewWrapper extends NotificationViewWrapper {
                     com.android.internal.R.attr.notificationHeaderTextAppearance,
                     com.android.internal.R.style.TextAppearance_DeviceDefault_Notification_Info);
             mAppNameText.setTextAppearance(textAppearance);
-            if (mAppNameText.getContext().getResources().getBoolean(
-                    com.android.internal.R.bool.config_allowNotificationAppNameTextTinting)) {
-                mAppNameText.setTextColor(mColor);
-            }
             ViewGroup.MarginLayoutParams layoutParams =
                     (ViewGroup.MarginLayoutParams) mAppNameText.getLayoutParams();
             final int marginStart = mAppNameText.getContext().getResources().getDimensionPixelSize(
