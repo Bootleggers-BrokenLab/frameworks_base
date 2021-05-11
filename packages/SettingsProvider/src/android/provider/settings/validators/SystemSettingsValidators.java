@@ -215,5 +215,6 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.RINGTONE_VIBRATION_PATTERN, new InclusiveIntegerRangeValidator(0, 4));
         VALIDATORS.put(System.FOOTER_TEXT_SHOW, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.FOOTER_TEXT_STRING, ANY_STRING_VALIDATOR);
+        VALIDATORS.put(System.AUTHENTICATION_SUCCESS_VIB, BOOLEAN_VALIDATOR);
     }
 }
