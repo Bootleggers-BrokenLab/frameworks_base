@@ -20,6 +20,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.app.admin.DevicePolicyManager;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -55,7 +56,7 @@ import com.android.keyguard.KeyguardUpdateMonitorCallback;
 import com.android.settingslib.utils.ThreadUtils;
 import com.android.systemui.Dependency;
 import com.android.systemui.R;
-import com.android.systemui.tuner.TunerService;
+
 import com.android.systemui.statusbar.policy.ConfigurationController;
 import com.android.systemui.statusbar.policy.ConfigurationController.ConfigurationListener;
 
@@ -66,10 +67,10 @@ import java.util.NoSuchElementException;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class FODCircleView extends ImageView implements TunerService.Tunable {
+public class FODCircleView extends ImageView {
     private static final String DOZE_INTENT = "com.android.systemui.doze.pulse";
     private static final int FADE_ANIM_DURATION = 250;
-    private final String SCREEN_BRIGHTNESS = "system:" + Settings.System.SCREEN_BRIGHTNESS;
+    private final String SCREEN_BRIGHTNESS = Settings.System.SCREEN_BRIGHTNESS;
     private final int[][] BRIGHTNESS_ALPHA_ARRAY = {
         new int[]{0, 255},
         new int[]{1, 224},
@@ -105,6 +106,7 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
     private final WindowManager mWindowManager;
 
     private IFingerprintInscreen mFingerprintInscreenDaemon;
+    private Context mContext;
 
     private int mCurrentBrightness;
     private int mDreamingOffsetX;
@@ -260,6 +262,37 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
         }
     };
 
+   private class CustomSettingsObserver extends ContentObserver {
+        CustomSettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    SCREEN_BRIGHTNESS), false, this, UserHandle.USER_ALL);
+        }
+
+        void unobserve() {
+            mContext.getContentResolver().unregisterContentObserver(this);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            // if (uri.equals(Settings.System.getUriFor(SCREEN_BRIGHTNESS))) {
+            update();
+            // }
+        }
+
+        void update() {
+            mCurrentBrightness = Settings.System.getInt(
+                    mContext.getContentResolver(), SCREEN_BRIGHTNESS, 100);
+            updateIconDim(false);
+        }
+    }
+
+    private CustomSettingsObserver mCustomSettingsObserver;
+
     private class FodGestureSettingsObserver extends ContentObserver {
         FodGestureSettingsObserver(Context context, Handler handler) {
             super(handler);
@@ -301,6 +334,7 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
 
     public FODCircleView(Context context) {
         super(context);
+        mContext = context;
 
         setScaleType(ScaleType.CENTER);
 
@@ -338,6 +372,8 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
         mDreamingMaxOffset = (int) (mSize * 0.1f);
 
         mHandler = new Handler(Looper.getMainLooper());
+
+        mCustomSettingsObserver = new CustomSettingsObserver(mHandler);
 
         mParams.height = mSize;
         mParams.width = mSize;
@@ -384,11 +420,6 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
 
         updateCutoutFlags();
         Dependency.get(ConfigurationController.class).addCallback(this);
-    }
-   @Override
-    public void onTuningChanged(String key, String newValue) {
-        mCurrentBrightness = newValue != null ? Integer.parseInt(newValue) : 0;
-        updateIconDim(false);
     }
 
     private int interpolate(int i, int i2, int i3, int i4, int i5) {
@@ -584,7 +615,8 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
             return;
         }
 
-        Dependency.get(TunerService.class).addTunable(this, SCREEN_BRIGHTNESS);
+        mCustomSettingsObserver.observe();
+        mCustomSettingsObserver.update();
         
         ThreadUtils.postOnBackgroundThread(() -> {
             dispatchShow();
@@ -608,7 +640,7 @@ public class FODCircleView extends ImageView implements TunerService.Tunable {
                     mFading = false;
                 })
                 .start();
-        Dependency.get(TunerService.class).removeTunable(this);     
+        mCustomSettingsObserver.unobserve();
         hideCircle();
         ThreadUtils.postOnBackgroundThread(() -> {
             dispatchHide();
