@@ -20,6 +20,7 @@ import static android.system.OsConstants.O_CLOEXEC;
 
 import static com.android.internal.os.ZygoteConnectionConstants.MAX_ZYGOTE_ARGC;
 
+import android.os.Build;
 import android.content.pm.ApplicationInfo;
 import android.net.Credentials;
 import android.net.LocalServerSocket;
@@ -46,6 +47,8 @@ import java.io.DataOutputStream;
 import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Field;
+
 
 /** @hide */
 public final class Zygote {
@@ -284,6 +287,9 @@ public final class Zygote {
      * @hide for internal use only
      */
     public static final String USAP_POOL_SECONDARY_SOCKET_NAME = "usap_pool_secondary";
+
+    private static final boolean PRODUCT_NEEDS_MODEL_EDIT =
+            SystemProperties.getBoolean("ro.product.needs_model_edit", false);
 
     private Zygote() {}
 
