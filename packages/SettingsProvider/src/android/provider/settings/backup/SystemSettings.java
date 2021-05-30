@@ -88,5 +88,6 @@ public class SystemSettings {
         Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN,
         Settings.System.DOZE_ON_CHARGE,
         Settings.System.RINGTONE_VIBRATION_PATTERN,
+        Settings.System.AUTHENTICATION_SUCCESS_VIB
     };
 }
