@@ -185,7 +185,8 @@ public class SystemSettings {
                 Settings.System.BRIGHTNESS_SLIDER_HAPTICS,
                 Settings.System.VOLUME_PANEL_HAPTICS,
                 Settings.System.THREE_FINGER_GESTURE,
-                Settings.System.NAVBAR_LONG_PRESS_GESTURE
+                Settings.System.NAVBAR_LONG_PRESS_GESTURE,
+                Settings.System.FULLSCREEN_GESTURES
         ));
         if (Flags.backUpSmoothDisplayAndForcePeakRefreshRate()) {
             settings.add(Settings.System.PEAK_REFRESH_RATE);
