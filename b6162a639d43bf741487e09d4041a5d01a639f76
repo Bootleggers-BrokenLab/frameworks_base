@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86cba314_5260a470",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2022-08-08T16:05:55Z",
+      "side": 1,
+      "message": "abandoning sig spoof commits as I wanna use calyxOS way of doing things",
+      "revId": "b6162a639d43bf741487e09d4041a5d01a639f76",
+      "serverId": "5a64c7d2-d220-4cff-a215-87a09ee22948"
+    }
+  ]
+}
