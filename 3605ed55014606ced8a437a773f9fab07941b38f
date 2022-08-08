@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5943ee49_04cfd5c9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2022-08-08T07:42:48Z",
+      "side": 1,
+      "message": "Let\u0027s see if this helps us in making bootanimation quicker",
+      "revId": "3605ed55014606ced8a437a773f9fab07941b38f",
+      "serverId": "5a64c7d2-d220-4cff-a215-87a09ee22948"
+    }
+  ]
+}
