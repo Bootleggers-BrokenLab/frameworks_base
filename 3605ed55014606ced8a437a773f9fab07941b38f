@@ -16,6 +16,23 @@
       "message": "Let\u0027s see if this helps us in making bootanimation quicker",
       "revId": "3605ed55014606ced8a437a773f9fab07941b38f",
       "serverId": "5a64c7d2-d220-4cff-a215-87a09ee22948"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9f10ba1a_dafc7510",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2022-08-09T10:24:12Z",
+      "side": 1,
+      "message": "i am not too sure about this, feels counter intuitive. Also suspecting this commit to have wrecked bootanimation for vayu (shows black until booted). ",
+      "revId": "3605ed55014606ced8a437a773f9fab07941b38f",
+      "serverId": "5a64c7d2-d220-4cff-a215-87a09ee22948"
     }
   ]
 }
