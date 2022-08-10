@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d801b47_3d3e23a3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2022-08-10T09:13:35Z",
+      "side": 1,
+      "message": "this will chill here for a while until all other parts in bootleg dumpster are in place. For now we are missing a few things in src/../fragments/* and in src/../preferences/*",
+      "revId": "1c300c9057ac5e6283a266de9b863ce4402270a2",
+      "serverId": "5a64c7d2-d220-4cff-a215-87a09ee22948"
+    }
+  ]
+}
