@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc5baa27_b7ef1506",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2022-08-12T19:49:06Z",
+      "side": 1,
+      "message": "i don\u0027t know if this is a sane thing to do",
+      "revId": "520ee49ddc916e9cd07584fd66ddf5c75a4dd75d",
+      "serverId": "5a64c7d2-d220-4cff-a215-87a09ee22948"
+    }
+  ]
+}
