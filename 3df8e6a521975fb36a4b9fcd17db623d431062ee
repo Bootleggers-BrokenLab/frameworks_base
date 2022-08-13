@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a27d4474_4e52b28a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-08-13T05:54:53Z",
+      "side": 1,
+      "message": "Untested but it\u0027s a simple commit that might make gradients work, we just need to add the respective overlays :)",
+      "revId": "3df8e6a521975fb36a4b9fcd17db623d431062ee",
+      "serverId": "5a64c7d2-d220-4cff-a215-87a09ee22948"
+    }
+  ]
+}
