@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdee7e73_937e97a2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2022-08-14T13:46:25Z",
+      "side": 1,
+      "message": "this is good to be merged. fixes that icon for media playing app in volume panel wasn\u0027t shown",
+      "revId": "1f246f28135854f9d1e5b131a2e2933e42ec938c",
+      "serverId": "5a64c7d2-d220-4cff-a215-87a09ee22948"
+    }
+  ]
+}
