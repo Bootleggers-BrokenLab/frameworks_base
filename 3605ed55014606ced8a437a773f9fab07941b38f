@@ -33,6 +33,23 @@
       "message": "i am not too sure about this, feels counter intuitive. Also suspecting this commit to have wrecked bootanimation for vayu (shows black until booted). ",
       "revId": "3605ed55014606ced8a437a773f9fab07941b38f",
       "serverId": "5a64c7d2-d220-4cff-a215-87a09ee22948"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b89ffadc_eec17582",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2022-08-18T14:10:15Z",
+      "side": 1,
+      "message": "actually had nothing to do with weird bootanimation missing problems. Applying this (aka reverting what it reverts lel) results in faster boot, coz now it goes straight to systemUI instead of staying black for a bit after bootanimation is done",
+      "revId": "3605ed55014606ced8a437a773f9fab07941b38f",
+      "serverId": "5a64c7d2-d220-4cff-a215-87a09ee22948"
     }
   ]
 }
