@@ -52,18 +52,15 @@ import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.dagger.qualifiers.Background;
 import com.android.systemui.dagger.qualifiers.Main;
-import com.android.systemui.omni.DetailedWeatherView;
 import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.plugins.FalsingManager;
-import com.android.systemui.plugins.qs.DetailAdapter;
 import com.android.systemui.plugins.qs.QSIconView;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
-import com.android.systemui.qs.QSDetailItems;
-import com.android.systemui.qs.QSDetailItems.Item;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.logging.QSLogger;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
+import com.android.systemui.qs.tiles.dialog.WeatherDialogFactory;
 
 import javax.inject.Inject;
 
@@ -73,14 +70,14 @@ import java.util.Arrays;
 public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsClient.OmniJawsObserver {
     private static final String TAG = "WeatherTile";
     private static final boolean DEBUG = false;
+    private final Handler mHandler;
     private OmniJawsClient mWeatherClient;
     private Drawable mWeatherImage;
     private String mWeatherLabel;
-    private DetailedWeatherView mDetailedView;
     private OmniJawsClient.WeatherInfo mWeatherData;
     private boolean mEnabled;
+    private final WeatherDialogFactory mWeatherDialogFactory;
     private final ActivityStarter mActivityStarter;
-    private WeatherDetailAdapter mDetailAdapter;
     private final Icon mIcon = ResourceIcon.get(R.drawable.ic_qs_weather_default_on);
 
     @Inject
@@ -92,29 +89,28 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
             MetricsLogger metricsLogger,
             StatusBarStateController statusBarStateController,
             ActivityStarter activityStarter,
-            QSLogger qsLogger
+            QSLogger qsLogger,
+            WeatherDialogFactory weatherDialogFactory
     ) {
         super(host, backgroundLooper, mainHandler, falsingManager, metricsLogger,
                 statusBarStateController, activityStarter, qsLogger);
         mWeatherClient = new OmniJawsClient(mContext);
         mEnabled = mWeatherClient.isOmniJawsEnabled();
+        mHandler = mainHandler;
+        mWeatherDialogFactory = weatherDialogFactory;
         mActivityStarter = Dependency.get(ActivityStarter.class);
-        mDetailAdapter = (WeatherDetailAdapter) createDetailAdapter();
     }
 
     @Override
     public int getMetricsCategory() {
-        return MetricsEvent.CUSTOM_QUICK_TILES;
-    }
-
-    @Override
-    public DetailAdapter getDetailAdapter() {
-        return mDetailAdapter;
+        return MetricsEvent.BOOTLEG;
     }
 
     @Override
     public BooleanState newTileState() {
-        return new BooleanState();
+        BooleanState s = new BooleanState();
+        s.forceExpandIcon = true;
+        return s;
     }
 
     @Override
@@ -145,9 +141,6 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
         if (errorReason != OmniJawsClient.EXTRA_ERROR_DISABLED) {
             mWeatherLabel = mContext.getResources().getString(R.string.omnijaws_service_error);
             refreshState();
-            if (isShowingDetail()) {
-                mDetailedView.weatherError(errorReason);
-            }
         }
     }
 
@@ -162,8 +155,6 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
     @Override
     protected void handleSecondaryClick(@Nullable View view) {
         if (DEBUG) Log.d(TAG, "handleSecondaryClick");
-        // Secondary clicks are also on quickbar tiles
-        showDetail(true);
     }
 
     @Override
@@ -183,6 +174,7 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
                 mEnabled = true;
                 mWeatherData = null;
                 mWeatherClient.setOmniJawsEnabled(true);
+                mHandler.post(() -> mWeatherDialogFactory.create(true, view));
             }
         } else {
             mEnabled = false;
@@ -245,69 +237,5 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
             mWeatherLabel = mContext.getResources().getString(R.string.omnijaws_label_default);
         }
         refreshState();
-        if (isShowingDetail()) {
-            mDetailedView.updateWeatherData(mWeatherData);
-        }
-    }
-
-    @Override
-    protected DetailAdapter createDetailAdapter() {
-        return new WeatherDetailAdapter();
-    }
-
-    private class WeatherDetailAdapter implements DetailAdapter {
-
-        @Override
-        public int getMetricsCategory() {
-        return MetricsEvent.CUSTOM_QUICK_TILES;
-        }
-
-        @Override
-        public CharSequence getTitle() {
-            return mContext.getString(R.string.omnijaws_detail_header);
-        }
-
-        @Override
-        public Boolean getToggleState() {
-            return mEnabled;
-        }
-
-        @Override
-        public void setToggleState(boolean state) {
-            MetricsLogger.action(mContext, getMetricsCategory());
-            mWeatherData = null;
-            mEnabled = state;
-            mWeatherClient.setOmniJawsEnabled(state);
-            if (state) {
-                mDetailedView.startProgress();
-            } else {
-                mDetailedView.stopProgress();
-                mDetailedView.post(() -> {
-                    mDetailedView.updateWeatherData(null);
-                });
-            }
-            refreshState();
-        }
-
-        @Override
-        public Intent getSettingsIntent() {
-            return mWeatherClient.getSettingsIntent();
-        }
-
-        @Override
-        public View createDetailView(Context context, View convertView, ViewGroup parent) {
-            if (DEBUG) Log.d(TAG, "createDetailView ");
-            mDetailedView = (DetailedWeatherView) LayoutInflater.from(context).inflate(
-                    R.layout.detailed_weather_view, parent, false);
-            mDetailedView.setWeatherClient(mWeatherClient);
-            mDetailedView.post(() -> {
-                try {
-                    mDetailedView.updateWeatherData(mWeatherData);
-                }   catch (Exception e){
-                }
-            });
-
-            return mDetailedView;
-        }
     }
 }
