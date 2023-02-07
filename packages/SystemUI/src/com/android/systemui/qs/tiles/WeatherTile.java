@@ -60,6 +60,7 @@ import com.android.systemui.plugins.statusbar.StatusBarStateController;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.logging.QSLogger;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
+import com.android.systemui.qs.tiles.dialog.WeatherDialogFactory;
 
 import javax.inject.Inject;
 
@@ -69,11 +70,13 @@ import java.util.Arrays;
 public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsClient.OmniJawsObserver {
     private static final String TAG = "WeatherTile";
     private static final boolean DEBUG = false;
+    private final Handler mHandler;
     private OmniJawsClient mWeatherClient;
     private Drawable mWeatherImage;
     private String mWeatherLabel;
     private OmniJawsClient.WeatherInfo mWeatherData;
     private boolean mEnabled;
+    private final WeatherDialogFactory mWeatherDialogFactory;
     private final ActivityStarter mActivityStarter;
     private final Icon mIcon = ResourceIcon.get(R.drawable.ic_qs_weather_default_on);
 
@@ -86,12 +89,15 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
             MetricsLogger metricsLogger,
             StatusBarStateController statusBarStateController,
             ActivityStarter activityStarter,
-            QSLogger qsLogger
+            QSLogger qsLogger,
+            WeatherDialogFactory weatherDialogFactory
     ) {
         super(host, backgroundLooper, mainHandler, falsingManager, metricsLogger,
                 statusBarStateController, activityStarter, qsLogger);
         mWeatherClient = new OmniJawsClient(mContext);
         mEnabled = mWeatherClient.isOmniJawsEnabled();
+        mHandler = mainHandler;
+        mWeatherDialogFactory = weatherDialogFactory;
         mActivityStarter = Dependency.get(ActivityStarter.class);
     }
 
@@ -102,7 +108,9 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
 
     @Override
     public BooleanState newTileState() {
-        return new BooleanState();
+        BooleanState s = new BooleanState();
+        s.forceExpandIcon = true;
+        return s;
     }
 
     @Override
@@ -166,6 +174,7 @@ public class WeatherTile extends QSTileImpl<BooleanState> implements OmniJawsCli
                 mEnabled = true;
                 mWeatherData = null;
                 mWeatherClient.setOmniJawsEnabled(true);
+                mHandler.post(() -> mWeatherDialogFactory.create(true, view));
             }
         } else {
             mEnabled = false;
