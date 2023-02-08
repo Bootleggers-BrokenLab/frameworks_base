@@ -51,6 +51,7 @@ import androidx.annotation.WorkerThread;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.internal.util.aicp.OmniJawsClient;
 import com.android.settingslib.Utils;
 import com.android.systemui.Prefs;
 import com.android.systemui.R;
@@ -72,7 +73,7 @@ import java.util.concurrent.Executor;
  * Dialog for weather
  */
 @SysUISingleton
-public class WeatherDialog extends SystemUIDialog implements Window.Callback {
+public class WeatherDialog extends SystemUIDialog implements Window.Callback, OmniJawsClient.OmniJawsObserver  {
     private static final String TAG = "WeatherDialog";
     private static final boolean DEBUG = true;
 
@@ -80,9 +81,12 @@ public class WeatherDialog extends SystemUIDialog implements Window.Callback {
     private Context mContext;
     private Handler mHandler;
     private View mDialogView;
+    private boolean mEnabled;
     private TextView mWeatherDialogTitle;
     private TextView mWeatherDialogSubTitle;
     private DetailedWeatherView mDetailedView;
+    private OmniJawsClient mWeatherClient;
+    private OmniJawsClient.WeatherInfo mWeatherData;
     private Button mDoneButton;
     private Button mSettingsButton;
     private DialogLaunchAnimator mDialogLaunchAnimator;
@@ -99,9 +103,11 @@ public class WeatherDialog extends SystemUIDialog implements Window.Callback {
         // Save the context that is wrapped with our theme.
         mContext = getContext();
         mHandler = handler;
+        mWeatherClient = new OmniJawsClient(mContext);
         mWeatherDialogFactory = weatherDialogFactory;
         mActivityStarter = activityStarter;
         mDialogLaunchAnimator = dialogLaunchAnimator;
+        mEnabled = mWeatherClient.isOmniJawsEnabled();
 
         if (!aboveStatusBar) {
             getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY);
@@ -118,11 +124,17 @@ public class WeatherDialog extends SystemUIDialog implements Window.Callback {
         final Window window = getWindow();
         window.setContentView(mDialogView);
         window.setWindowAnimations(R.style.Animation_InternetDialog);
+        mWeatherData = null;
+        mWeatherClient.setOmniJawsEnabled(true);
+        mDetailedView = (DetailedWeatherView) mDialogView.requireViewById(R.id.detailed_weather_view);
 
         mWeatherDialogTitle = mDialogView.requireViewById(R.id.weather_dialog_title);
         mWeatherDialogSubTitle = mDialogView.requireViewById(R.id.weather_dialog_subtitle);
         mDoneButton = mDialogView.requireViewById(R.id.done_button);
         mSettingsButton = mDialogView.requireViewById(R.id.settings_button);
+
+        // Should we?
+        //updateDialog();
 
         mDoneButton.setOnClickListener(v -> dismissDialog());
         mSettingsButton.setOnClickListener(v -> {
@@ -136,6 +148,7 @@ public class WeatherDialog extends SystemUIDialog implements Window.Callback {
         if (DEBUG) {
             Log.d(TAG, "onStart");
         }
+        mDetailedView.startProgress();
     }
 
     @Override
@@ -144,6 +157,13 @@ public class WeatherDialog extends SystemUIDialog implements Window.Callback {
         if (DEBUG) {
             Log.d(TAG, "onStop");
         }
+        mDetailedView.stopProgress();
+        mDetailedView.post(() -> {
+            mDetailedView.updateWeatherData(null);
+        });
+        // make sure we dont left one
+        mWeatherClient.removeObserver(this);
+        mWeatherClient.cleanupObserver();
         mDoneButton.setOnClickListener(null);
         mSettingsButton.setOnClickListener(null);
         mWeatherDialogFactory.destroyDialog();
@@ -155,6 +175,22 @@ public class WeatherDialog extends SystemUIDialog implements Window.Callback {
         }
         mWeatherDialogFactory.destroyDialog();
         dismiss();
+    }
+
+    @Override
+    public void weatherUpdated() {
+        if (DEBUG) Log.d(TAG, "weatherUpdated");
+        updateDialog();
+    }
+
+    @Override
+    public void weatherError(int errorReason) {
+        if (DEBUG) Log.d(TAG, "weatherError " + errorReason);
+        if (errorReason != OmniJawsClient.EXTRA_ERROR_DISABLED) {
+            mWeatherDialogSubTitle.setText(mContext.getResources()
+                    .getString(R.string.omnijaws_service_error));
+            mDetailedView.weatherError(errorReason);
+        }
     }
 
     void startActivity(Intent intent, View view) {
@@ -175,8 +211,21 @@ public class WeatherDialog extends SystemUIDialog implements Window.Callback {
         if (DEBUG) {
             Log.d(TAG, "updateDialog");
         }
+        mDetailedView.updateWeatherData(mWeatherData);
+        String weatherSubTitle = mContext.getResources().getString(R.string.omnijaws_service_unkown);
+        try {
+            if (mEnabled) {
+                mWeatherClient.queryWeather();
+                mWeatherData = mWeatherClient.getWeatherInfo();
+                if (mWeatherData != null) {
+                    weatherSubTitle = mWeatherData.temp + mWeatherData.tempUnits;
+                }
+            }
+        } catch(Exception e) {
+            Log.d(TAG, "updateDialog: Weather info is unavailable");
+        }
         // subtitle
-        mWeatherDialogSubTitle.setText("30° in [REDACTED]");
+        mWeatherDialogSubTitle.setText(weatherSubTitle);
     }
 }
 
