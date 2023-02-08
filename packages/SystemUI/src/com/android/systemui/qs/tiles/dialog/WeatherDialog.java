@@ -138,7 +138,7 @@ public class WeatherDialog extends SystemUIDialog implements Window.Callback, Om
 
         mDoneButton.setOnClickListener(v -> dismissDialog());
         mSettingsButton.setOnClickListener(v -> {
-            startActivity(mWeatherClient.getSettingsIntent());
+            startActivity(mWeatherClient.getSettingsIntent(),v);
         });
     }
 
