@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Pair;
@@ -34,11 +35,13 @@ import android.view.ViewGroup;
 import android.view.WindowInsets;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.ImageView;
 import android.widget.Space;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.android.internal.graphics.ColorUtils;
 import com.android.internal.policy.SystemBarUtils;
 import com.android.settingslib.Utils;
 import com.android.systemui.R;
@@ -57,6 +60,9 @@ import java.util.List;
  * battery, carrier info and privacy icons) and also contains the {@link QuickQSPanel}.
  */
 public class QuickStatusBarHeader extends FrameLayout {
+
+    private static final String QS_HEADER_IMAGE =
+            "system:" + Settings.System.QS_HEADER_IMAGE;
 
     private boolean mExpanded;
     private boolean mQsDisabled;
@@ -90,6 +96,12 @@ public class QuickStatusBarHeader extends FrameLayout {
     private BatteryMeterView mBatteryRemainingIcon;
     private StatusIconContainer mIconContainer;
     private View mPrivacyChip;
+
+    // QS Header
+    private ImageView mQsHeaderImageView;
+    private View mQsHeaderLayout;
+    private boolean mHeaderImageEnabled;
+    private int mHeaderImageValue;
 
     @Nullable
     private TintedIconManager mTintedIconManager;
@@ -158,6 +170,10 @@ public class QuickStatusBarHeader extends FrameLayout {
         mDatePrivacySeparator = findViewById(R.id.space);
         // Tint for the battery icons are handled in setupHost()
         mBatteryRemainingIcon = findViewById(R.id.batteryRemainingIcon);
+
+        mQsHeaderLayout = findViewById(R.id.layout_header);
+        mQsHeaderImageView = findViewById(R.id.qs_header_image_view);
+        mQsHeaderImageView.setClipToOutline(true);
 
         updateResources();
         Configuration config = mContext.getResources().getConfiguration();
@@ -319,11 +335,33 @@ public class QuickStatusBarHeader extends FrameLayout {
                 : SystemBarUtils.getQuickQsOffsetHeight(mContext);
         mHeaderQsPanel.setLayoutParams(qqsLP);
 
+
         updateBatteryMode();
         updateHeadersPadding();
         updateAnimators();
 
         updateClockDatePadding();
+    }
+
+    private void updateQSHeaderImage() {
+        if (!mHeaderImageEnabled) {
+            mQsHeaderLayout.setVisibility(View.GONE);
+            return;
+        }
+        Configuration config = mContext.getResources().getConfiguration();
+        if (config.orientation != Configuration.ORIENTATION_LANDSCAPE) {
+            boolean mIsNightMode = (mContext.getResources().getConfiguration().uiMode &
+                Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
+            int fadeFilter = ColorUtils.blendARGB(Color.TRANSPARENT, mIsNightMode ?
+                Color.BLACK : Color.WHITE, 30 / 100f);
+            int resId = getResources().getIdentifier("qs_header_image_" +
+                String.valueOf(mHeaderImageValue), "drawable", "com.android.systemui");
+            mQsHeaderImageView.setImageResource(resId);
+            mQsHeaderImageView.setColorFilter(fadeFilter, PorterDuff.Mode.SRC_ATOP);
+            mQsHeaderLayout.setVisibility(View.VISIBLE);
+        } else {
+            mQsHeaderLayout.setVisibility(View.GONE);
+        }
     }
 
     private static int reduceColorAlpha(int color, float factor) {
