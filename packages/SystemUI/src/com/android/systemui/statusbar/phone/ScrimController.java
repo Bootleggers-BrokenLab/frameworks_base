@@ -264,6 +264,8 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
     private boolean mWallpaperSupportsAmbientMode;
     private boolean mScreenOn;
     private boolean mTransparentScrimBackground;
+    private float mTransparentBehindScrimAmount;
+    private float mTransparentNotifScrimAmount;
 
     // Scrim blanking callbacks
     private Runnable mPendingFrameCallback;
@@ -398,8 +400,6 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
             states[i].setDefaultScrimAlpha(mDefaultScrimAlpha);
         }
 
-        mTransparentScrimBackground = notificationsScrim.getResources()
-                .getBoolean(R.bool.notification_scrim_transparent);
         updateScrims();
         mKeyguardUpdateMonitor.registerCallback(mKeyguardVisibilityCallback);
 
@@ -898,13 +898,16 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
                     && !mAnimatingPanelExpansionOnUnlock
                     && !occluding) {
                 if (mTransparentScrimBackground) {
-                    mBehindAlpha = 0;
-                    mNotificationsAlpha = 0;
+                    float bfraction = getInterpolatedFraction();
+                    bfraction = (float) Math.pow(bfraction, 0.8f);
+                    mBehindAlpha = bfraction * mTransparentBehindScrimAmount;
+                    mNotificationsAlpha = bfraction * mTransparentNotifScrimAmount;
                 } else if (mClipsQsScrim) {
                     float behindFraction = getInterpolatedFraction();
                     behindFraction = (float) Math.pow(behindFraction, 0.8f);
-                    mBehindAlpha = 1;
-                    mNotificationsAlpha = behindFraction * mDefaultScrimAlpha;
+                    mBehindAlpha = mTransparentScrimBackground ? mTransparentBehindScrimAmount : 1;
+                    mNotificationsAlpha = mTransparentScrimBackground ? behindFraction * mTransparentNotifScrimAmount
+                                        : behindFraction * mDefaultScrimAlpha;
                 } else {
                     mBehindAlpha = mLargeScreenShadeInterpolator.getBehindScrimAlpha(
                             mPanelExpansionFraction * mDefaultScrimAlpha);
@@ -1124,6 +1127,14 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
     }
 
     protected void updateScrims() {
+        // Let's update this resources after setting the overlays
+        mTransparentScrimBackground = mNotificationsScrim.getResources()
+                .getBoolean(R.bool.notification_scrim_transparent);
+        mTransparentBehindScrimAmount = mNotificationsScrim.getResources()
+                .getFloat(R.dimen.config_behind_scrim_transparency_amount);
+        mTransparentNotifScrimAmount = mNotificationsScrim.getResources()
+                .getFloat(R.dimen.config_notification_scrim_transparency_amount);
+
         // Make sure we have the right gradients and their opacities will satisfy GAR.
         if (mNeedsDrawableColorUpdate) {
             mNeedsDrawableColorUpdate = false;
@@ -1525,6 +1536,7 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
 
     private void onThemeChanged() {
         updateThemeColors();
+        updateScrims();
         scheduleUpdate();
     }
 
