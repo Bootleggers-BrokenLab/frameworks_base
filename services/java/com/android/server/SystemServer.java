@@ -120,6 +120,7 @@ import com.android.server.biometrics.BiometricService;
 import com.android.server.biometrics.sensors.face.FaceService;
 import com.android.server.biometrics.sensors.fingerprint.FingerprintService;
 import com.android.server.biometrics.sensors.iris.IrisService;
+import com.android.server.bootleg.CustomDeviceConfigService;
 import com.android.server.broadcastradio.BroadcastRadioService;
 import com.android.server.camera.CameraServiceProxy;
 import com.android.server.clipboard.ClipboardService;
@@ -2645,6 +2646,12 @@ public final class SystemServer implements Dumpable {
             t.traceBegin("StartBackgroundInstallControlService");
             mSystemServiceManager.startService(BackgroundInstallControlService.class);
             t.traceEnd();
+
+            // CustomDeviceConfigService
+            t.traceBegin("StartCustomDeviceConfigService");
+            mSystemServiceManager.startService(CustomDeviceConfigService.class);
+            t.traceEnd();
+
         }
 
         t.traceBegin("StartMediaProjectionManager");
