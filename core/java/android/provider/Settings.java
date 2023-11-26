@@ -6571,6 +6571,11 @@ public final class Settings {
         public static final String LOCKSCREEN_WEATHER_LOCATION = "lockscreen_weather_location";
 
         /**
+         * @hide
+         */
+        public static final String LOCKSCREEN_WEATHER_TEXT = "lockscreen_weather_text";
+
+        /**
          * These are all hidden system settings.
          *
          * @hide
