@@ -688,19 +688,17 @@ public class FaceService extends SystemService {
 
         private List<ServiceProvider> getSenseProviders() {
             final List<ServiceProvider> providers = new ArrayList<>();
-            if (SenseUtils.canUseProvider()) {
-                FaceSensorPropertiesInternal props = new FaceSensorPropertiesInternal(
-                        SenseProvider.DEVICE_ID,
-                        SensorProperties.STRENGTH_WEAK,
-                        1, /** maxEnrollmentsPerUser **/
-                        new ArrayList(),
-                        FaceSensorProperties.TYPE_RGB,
-                        false, /** supportsFaceDetection **/
-                        false, /** supportsSelfIllumination **/
-                        false); /** resetLockoutRequiresChallenge **/
-                SenseProvider provider = new SenseProvider(getContext(), mBiometricStateCallback, props, mLockoutResetDispatcher);
-                providers.add(provider);
-            }
+            FaceSensorPropertiesInternal props = new FaceSensorPropertiesInternal(
+                    SenseProvider.DEVICE_ID,
+                    SensorProperties.STRENGTH_WEAK,
+                    1, /** maxEnrollmentsPerUser **/
+                    new ArrayList(),
+                    FaceSensorProperties.TYPE_RGB,
+                    false, /** supportsFaceDetection **/
+                    false, /** supportsSelfIllumination **/
+                    false); /** resetLockoutRequiresChallenge **/
+            SenseProvider provider = new SenseProvider(getContext(), mBiometricStateCallback, props, mLockoutResetDispatcher);
+            providers.add(provider);
             return providers;
         }
 
@@ -710,19 +708,22 @@ public class FaceService extends SystemService {
             super.registerAuthenticators_enforcePermission();
 
             mRegistry.registerAll(() -> {
-                /*List<String> aidlSensors = new ArrayList<>();
+                if (SenseUtils.canUseProvider()) {
+                    providers.addAll(getSenseProviders());
+                    return providers;
+                }
+                List<String> aidlSensors = new ArrayList<>();
                 final String[] instances = ServiceManager.getDeclaredInstances(IFace.DESCRIPTOR);
                 if (instances != null) {
                     aidlSensors.addAll(Lists.newArrayList(instances));
                 }
 
                 final Pair<List<FaceSensorPropertiesInternal>, List<String>>
-                        filteredInstances = filterAvailableHalInstances(hidlSensors, aidlSensors);*/
+                        filteredInstances = filterAvailableHalInstances(hidlSensors, aidlSensors);
 
                 final List<ServiceProvider> providers = new ArrayList<>();
-                /*providers.addAll(getHidlProviders(filteredInstances.first));
-                providers.addAll(getAidlProviders(filteredInstances.second));*/
-                providers.addAll(getSenseProviders());
+                providers.addAll(getHidlProviders(filteredInstances.first));
+                providers.addAll(getAidlProviders(filteredInstances.second));
                 return providers;
             });
         }
