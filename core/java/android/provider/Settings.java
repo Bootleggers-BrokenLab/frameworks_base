@@ -5879,6 +5879,11 @@ public final class Settings {
          * the setting value. See an example above.
          */
 
+       /**
+         * Whether or not volume button music controls should be enabled to seek media tracks
+         * @hide
+         */
+        public static final String VOLBTN_MUSIC_CONTROLS = "volbtn_music_controls";
 
         /**
          * Defines the screen-off animation to display
@@ -5951,6 +5956,81 @@ public final class Settings {
          * @hide
          */
         public static final String STATUS_BAR_CUSTOM_HEADER_HEIGHT = "status_bar_custom_header_height";
+
+        /**
+         * Whether the torch launch gesture to double tap or long press the power button when the
+         * screen is off should be enabled. *
+         * 0: disabled
+         * 1: long tap power for torch
+         * @hide
+         */
+        public static final String TORCH_POWER_BUTTON_GESTURE = "torch_power_button_gesture";
+
+        /**
+         * Whether to show power menu on LockScreen
+         * @hide
+         */
+        public static final String LOCKSCREEN_ENABLE_POWER_MENU = "lockscreen_enable_power_menu";
+
+        /**
+         * Whether to display cross sign for a data disabled connection
+         * @hide
+         */
+        public static final String DATA_DISABLED_ICON = "data_disabled_icon";
+
+        /**
+         * Enable/disable Bluetooth Battery bar
+         * @hide
+         */
+        public static final String BLUETOOTH_SHOW_BATTERY = "bluetooth_show_battery";
+
+        /**
+         * Network traffic indicator location
+         * 0 = Disabled
+         * 1 = Statusbar
+         * 2 = Quick statusbar
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_LOCATION = "network_traffic_location";
+
+        /**
+         * Network traffic indicator mode
+         * 0 = Display both up- and down-stream traffic
+         * 1 = Display up-stream traffic only
+         * 2 = Display down-stream traffic only
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_MODE = "network_traffic_mode";
+
+        /**
+         * Whether or not to hide the network traffic indicator when there is no activity
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_AUTOHIDE = "network_traffic_autohide";
+
+        /**
+         * Threshold below which network traffic would be hidden
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD = "network_traffic_autohide_threshold";
+
+        /**
+         * Measurement unit preference for network traffic
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_UNITS = "network_traffic_units";
+
+        /**
+         * Specify refresh duration for network traffic
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_REFRESH_INTERVAL = "network_traffic_refresh_interval";
+
+        /**
+         * Whether to hide arrows for network traffic
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_HIDEARROW = "network_traffic_hidearrow";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
@@ -11574,6 +11654,12 @@ public final class Settings {
         public static final String TAP_GESTURE = "tap_gesture";
 
         /**
+         * Whether tethering is allowed to use VPN upstreams
+         */
+        @SuppressLint("NoSettingsProvider")
+        public static final String TETHERING_ALLOW_VPN_UPSTREAMS = "tethering_allow_vpn_upstreams";
+
+        /**
          * Controls whether the people strip is enabled.
          * @hide
          */
@@ -12022,6 +12108,39 @@ public final class Settings {
          * @hide
          */
         public static final String LOCK_SCREEN_WEATHER_ENABLED = "lockscreen_weather_enabled";
+
+        /**
+         * Control whether FLAG_SECURE is ignored for all windows.
+         * @hide
+         */
+        @Readable
+        public static final String WINDOW_IGNORE_SECURE = "window_ignore_secure";
+
+        /**
+         * Whether to show the brightness slider in quick settings panel.
+         * @hide
+         */
+        public static final String QS_SHOW_BRIGHTNESS_SLIDER = "qs_show_brightness_slider";
+
+        /**
+         * Whether to show the brightness slider in quick settings panel.
+         * 0 = Top, 1 = Bottom
+         * @hide
+         */
+        public static final String QS_BRIGHTNESS_SLIDER_POSITION = "qs_brightness_slider_position";
+
+        /**
+         * Whether to show the auto brightness icon in quick settings panel.
+         * @hide
+         */
+        public static final String QS_SHOW_AUTO_BRIGHTNESS = "qs_show_auto_brightness";
+
+        /**
+         * Whether to show QS auto brightness toggle button
+         * @hide
+         */
+        @Readable
+        public static final String QSTILE_REQUIRES_UNLOCKING = "qstile_requires_unlocking";
 
         /**
          * These entries are considered common between the personal and the managed profile,
