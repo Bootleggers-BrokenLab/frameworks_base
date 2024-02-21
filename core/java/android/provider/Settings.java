@@ -6194,6 +6194,18 @@ public final class Settings {
         public static final String STATUS_BAR_CLOCK_AUTO_HIDE_SDURATION = "status_bar_clock_auto_hide_sduration";
 
         /**
+         * Whether StatusBar icons should use app icon
+         * @hide
+         */
+        public static final String STATUSBAR_COLORED_ICONS = "statusbar_colored_icons";
+
+        /**
+         * Show the pending notification counts as overlays on the status bar
+         * @hide
+         */
+        public static final String STATUSBAR_NOTIF_COUNT = "statusbar_notif_count";
+
+        /**
          * These are all hidden system settings.
          *
          * @hide
