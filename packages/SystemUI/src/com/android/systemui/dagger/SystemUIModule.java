@@ -58,6 +58,7 @@ import com.android.systemui.dump.DumpManager;
 import com.android.systemui.flags.FeatureFlags;
 import com.android.systemui.flags.FlagDependenciesModule;
 import com.android.systemui.flags.FlagsModule;
+import com.android.systemui.globalactions.ShutdownUiModule;
 import com.android.systemui.keyboard.KeyboardModule;
 import com.android.systemui.keyevent.data.repository.KeyEventRepositoryModule;
 import com.android.systemui.keyguard.ui.view.layout.blueprints.KeyguardBlueprintModule;
@@ -219,6 +220,7 @@ import javax.inject.Named;
         SecurityRepositoryModule.class,
         ScreenRecordModule.class,
         SettingsUtilModule.class,
+        ShutdownUiModule.class,
         SmartRepliesInflationModule.class,
         SmartspaceModule.class,
         StatusBarEventsModule.class,
