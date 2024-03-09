@@ -1,4 +1,7 @@
 /*
+ * Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ * Not a Contribution.
+ *
  * Copyright (C) 2013 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -62,23 +65,26 @@ import java.util.regex.Pattern;
  */
 @SystemApi
 @FlaggedApi(Flags.FLAG_ENABLE_NFC_MAINLINE)
-public final class ApduServiceInfo implements Parcelable {
+public class ApduServiceInfo implements Parcelable {
     private static final String TAG = "ApduServiceInfo";
 
     /**
      * The service that implements this
      */
-    private final ResolveInfo mService;
+    @UnsupportedAppUsage
+    protected ResolveInfo mService;
 
     /**
      * Description of the service
      */
-    private final String mDescription;
+    @UnsupportedAppUsage
+    protected String mDescription;
 
     /**
      * Whether this service represents AIDs running on the host CPU
      */
-    private final boolean mOnHost;
+    @UnsupportedAppUsage
+    protected boolean mOnHost;
 
     /**
      * Offhost reader name.
@@ -95,42 +101,50 @@ public final class ApduServiceInfo implements Parcelable {
     /**
      * Mapping from category to static AID group
      */
-    private final HashMap<String, AidGroup> mStaticAidGroups;
+    @UnsupportedAppUsage
+    protected HashMap<String, AidGroup> mStaticAidGroups;
 
     /**
      * Mapping from category to dynamic AID group
      */
-    private final HashMap<String, AidGroup> mDynamicAidGroups;
+    @UnsupportedAppUsage
+    protected HashMap<String, AidGroup> mDynamicAidGroups;
 
     /**
      * Whether this service should only be started when the device is unlocked.
      */
-    private final boolean mRequiresDeviceUnlock;
+    @UnsupportedAppUsage
+    protected boolean mRequiresDeviceUnlock;
 
     /**
      * Whether this service should only be started when the device is screen on.
      */
-    private final boolean mRequiresDeviceScreenOn;
+    @UnsupportedAppUsage
+    protected boolean mRequiresDeviceScreenOn;
 
     /**
      * The id of the service banner specified in XML.
      */
-    private final int mBannerResourceId;
+    @UnsupportedAppUsage
+    protected int mBannerResourceId;
 
     /**
      * The uid of the package the service belongs to
      */
-    private final int mUid;
+    @UnsupportedAppUsage
+    protected int mUid;
 
     /**
      * Settings Activity for this service
      */
-    private final String mSettingsActivityName;
+    @UnsupportedAppUsage
+    protected String mSettingsActivityName;
 
     /**
      * State of the service for CATEGORY_OTHER selection
      */
-    private boolean mOtherServiceEnabled;
+    @UnsupportedAppUsage
+    protected boolean mOtherServiceEnabled;
 
     /**
      * @hide
