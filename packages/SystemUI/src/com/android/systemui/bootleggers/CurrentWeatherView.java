@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.android.systemui.yaap;
+package com.android.systemui.bootleggers;
 
 import android.content.Context;
 import android.content.Intent;
@@ -28,7 +28,7 @@ import android.widget.ImageView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import com.android.internal.util.yaap.OmniJawsClient;
+import com.android.internal.util.bootleggers.OmniJawsClient;
 import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.res.R;
 

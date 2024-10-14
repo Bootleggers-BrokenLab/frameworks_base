@@ -13,7 +13,7 @@ import android.view.ViewConfiguration
 import androidx.annotation.FloatRange
 import androidx.annotation.VisibleForTesting
 
-import com.android.internal.util.yaap.YaapUtils
+import com.android.internal.util.bootleggers.YaapUtils
 import com.android.systemui.Dumpable
 import com.android.systemui.ExpandHelper
 import com.android.systemui.Gefingerpoken

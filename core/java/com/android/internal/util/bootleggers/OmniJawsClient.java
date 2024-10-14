@@ -15,7 +15,7 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 */
-package com.android.internal.util.yaap;
+package com.android.internal.util.bootleggers;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;

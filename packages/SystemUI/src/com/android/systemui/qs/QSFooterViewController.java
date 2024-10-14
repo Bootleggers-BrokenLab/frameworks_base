@@ -148,7 +148,7 @@ public class QSFooterViewController extends ViewController<QSFooterView> impleme
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
         editText.setLayoutParams(lp);
-        editText.setHint("YAAP");
+        editText.setHint("BOOTLEGGERS");
         editText.setText(mBuildText.getText(), TextView.BufferType.EDITABLE);
         editText.setSelectAllOnFocus(true);
         editText.setSingleLine(true);

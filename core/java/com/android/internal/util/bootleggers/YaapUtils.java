@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.internal.util.yaap;
+package com.android.internal.util.bootleggers;
 
 import android.content.Context;
 import android.content.Intent;

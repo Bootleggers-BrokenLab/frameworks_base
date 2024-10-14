@@ -12442,8 +12442,8 @@ public final class Settings {
 
         /**
          * What behavior should be invoked when the volume hush gesture is triggered
-         * Either YAAP_VOLUME_HUSH_OFF or a comma separated list of modes. One or more of:
-         * YAAP_VOLUME_HUSH_NORMAL, YAAP_VOLUME_HUSH_VIBRATE, YAAP_VOLUME_HUSH_MUTE
+         * Either BOOTLEGGERS_VOLUME_HUSH_OFF or a comma separated list of modes. One or more of:
+         * BOOTLEGGERS_VOLUME_HUSH_NORMAL, BOOTLEGGERS_VOLUME_HUSH_VIBRATE, BOOTLEGGERS_VOLUME_HUSH_MUTE
          * @hide
          */
         @SystemApi
@@ -12451,13 +12451,13 @@ public final class Settings {
         public static final String VOLUME_HUSH_GESTURE = "volume_hush_gesture";
 
         /** @hide */
-        public static final String YAAP_VOLUME_HUSH_OFF = "off";
+        public static final String BOOTLEGGERS_VOLUME_HUSH_OFF = "off";
         /** @hide */
-        public static final String YAAP_VOLUME_HUSH_NORMAL = "normal";
+        public static final String BOOTLEGGERS_VOLUME_HUSH_NORMAL = "normal";
         /** @hide */
-        public static final String YAAP_VOLUME_HUSH_VIBRATE = "vibrate";
+        public static final String BOOTLEGGERS_VOLUME_HUSH_VIBRATE = "vibrate";
         /** @hide */
-        public static final String YAAP_VOLUME_HUSH_MUTE = "mute";
+        public static final String BOOTLEGGERS_VOLUME_HUSH_MUTE = "mute";
 
         // Following ints are now useless
         // We can't remove or change those without changing the sdk
