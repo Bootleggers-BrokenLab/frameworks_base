@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.internal.util.yaap;
+package com.android.internal.util.bootleggers;
 
 import android.content.Context;
 import android.content.Intent;
@@ -39,7 +39,7 @@ import com.android.internal.statusbar.IStatusBarService;
 /**
  * Some custom utilities
  */
-public class YaapUtils {
+public class BootleggersUtils {
 
     public static final String INTENT_SCREENSHOT = "action_handler_screenshot";
     public static final String INTENT_REGION_SCREENSHOT = "action_handler_region_screenshot";

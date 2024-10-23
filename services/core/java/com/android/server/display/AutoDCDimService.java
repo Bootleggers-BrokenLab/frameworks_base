@@ -17,7 +17,7 @@ package com.android.server.display;
 
 import static android.provider.Settings.Secure.DC_DIM_AUTO_MODE;
 import static android.provider.Settings.Secure.DC_DIM_AUTO_TIME;
-import static com.android.internal.util.yaap.AutoSettingConsts.MODE_DISABLED;
+import static com.android.internal.util.bootleggers.AutoSettingConsts.MODE_DISABLED;
 
 import android.content.Context;
 import android.content.Intent;
@@ -39,7 +39,7 @@ import java.util.List;
 public class AutoDCDimService extends AutoSettingService {
 
     private static final String TAG = "AutoDCDimService";
-    private static final String ACTION_DCMODE_CHANGED = "com.yaap.device.DeviceSettings.ModeSwitch.DCMODE_CHANGED";
+    private static final String ACTION_DCMODE_CHANGED = "com.bootleggers.device.DeviceSettings.ModeSwitch.DCMODE_CHANGED";
     private static final String EXTRA_DCMODE_STATE = "enabled";
     private static final String ON = "1";
     private static final String OFF = "0";

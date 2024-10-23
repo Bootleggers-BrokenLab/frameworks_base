@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.android.internal.yaap.hardware;
+package com.android.internal.bootleggers.hardware;
 
 import android.os.Parcel;
 import android.os.Parcelable;

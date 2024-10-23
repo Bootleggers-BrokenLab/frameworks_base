@@ -38,7 +38,7 @@ import static android.media.session.PlaybackState.STATE_PLAYING;
 import static android.os.Build.VERSION_CODES.M;
 import static android.os.Build.VERSION_CODES.O;
 import static android.os.IInputConstants.INVALID_INPUT_DEVICE_ID;
-import static android.provider.Settings.Secure.YAAP_VOLUME_HUSH_OFF;
+import static android.provider.Settings.Secure.BOOTLEGGERS_VOLUME_HUSH_OFF;
 import static android.view.Display.DEFAULT_DISPLAY;
 import static android.view.Display.INVALID_DISPLAY;
 import static android.view.Display.STATE_OFF;
@@ -224,7 +224,7 @@ import com.android.internal.policy.LogDecelerateInterpolator;
 import com.android.internal.policy.PhoneWindow;
 import com.android.internal.policy.TransitionAnimation;
 import com.android.internal.statusbar.IStatusBarService;
-import com.android.internal.util.yaap.YaapUtils;
+import com.android.internal.util.bootleggers.BootleggersUtils;
 import com.android.internal.widget.LockPatternUtils;
 import com.android.server.AccessibilityManagerInternal;
 import com.android.server.ExtconStateObserver;
@@ -686,7 +686,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     private static final float KEYGUARD_SCREENSHOT_CHORD_DELAY_MULTIPLIER = 2.5f;
 
     // Ringer toggle should reuse timing and triggering from screenshot power and a11y vol up
-    private String mRingerToggleChord = YAAP_VOLUME_HUSH_OFF;
+    private String mRingerToggleChord = BOOTLEGGERS_VOLUME_HUSH_OFF;
 
     private static final long BUGREPORT_TV_GESTURE_TIMEOUT_MILLIS = 1000;
 
@@ -1037,7 +1037,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
     private void handleRingerChordGesture() {
         if (mRingerToggleChord == null ||
-                mRingerToggleChord.equals(YAAP_VOLUME_HUSH_OFF)) return;
+                mRingerToggleChord.equals(BOOTLEGGERS_VOLUME_HUSH_OFF)) return;
         getAudioManagerInternal();
         mAudioManagerInternal.silenceRingerModeInternal("volume_hush");
         Settings.Secure.putInt(mContext.getContentResolver(), Settings.Secure.HUSH_GESTURE_USED, 1);
@@ -2654,7 +2654,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     boolean preCondition() {
                         switch (mPowerVolUpBehavior) {
                             case POWER_VOLUME_UP_BEHAVIOR_MUTE:
-                                return mRingerToggleChord != YAAP_VOLUME_HUSH_OFF;
+                                return mRingerToggleChord != BOOTLEGGERS_VOLUME_HUSH_OFF;
                             default:
                                 return true;
                         }
@@ -2819,12 +2819,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
         if (mTorchActionMode == TORCH_ACTION_LONG && longpress) {
             performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, false,
                     "Power - Long Press - Torch");
-            YaapUtils.toggleCameraFlash();
+            BootleggersUtils.toggleCameraFlash();
             return true;
         } else if (mTorchActionMode == TORCH_ACTION_DOUBLE && !longpress) {
             performHapticFeedback(HapticFeedbackConstants.LONG_PRESS, false,
                       "Power - Double Press - Torch");
-            YaapUtils.toggleCameraFlash();
+            BootleggersUtils.toggleCameraFlash();
             return true;
         }
         return false;
@@ -3090,7 +3090,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     POWER_BUTTON_SUPPRESSION_DELAY_DEFAULT_MILLIS);
             if (!mContext.getResources()
                     .getBoolean(com.android.internal.R.bool.config_volumeHushGestureEnabled)) {
-                mRingerToggleChord = YAAP_VOLUME_HUSH_OFF;
+                mRingerToggleChord = BOOTLEGGERS_VOLUME_HUSH_OFF;
             }
 
             mVolumeMusicControl = Settings.System.getIntForUser(resolver,
@@ -6869,7 +6869,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
     public void sendCustomAction(Intent intent) {
         String action = intent.getAction();
         if (action != null) {
-            if (YaapUtils.INTENT_SCREENSHOT.equals(action)) {
+            if (BootleggersUtils.INTENT_SCREENSHOT.equals(action)) {
                 interceptScreenshotChord(TAKE_SCREENSHOT_FULLSCREEN, 0);
             }
         }

@@ -403,7 +403,7 @@ oneway interface IStatusBar
     void moveFocusedTaskToDesktop(int displayId);
 
     /**
-     * YAAP extensions
+     * BOOTLEGGERS extensions
      */
     void toggleCameraFlash();
 }
